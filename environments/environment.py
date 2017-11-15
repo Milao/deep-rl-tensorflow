@@ -56,7 +56,7 @@ class ToyEnvironment(Environment):
 class AtariEnvironment(Environment):
   def __init__(self, env_name, n_action_repeat, max_random_start,
                observation_dims, data_format, display, use_cumulated_reward):
-    super(AtariEnvironment, self).__init__(env_name, 
+    super(AtariEnvironment, self).__init__(env_name,
         n_action_repeat, max_random_start, observation_dims, data_format, display, use_cumulated_reward)
 
   def new_game(self, from_random_game=False):
@@ -96,7 +96,7 @@ class AtariEnvironment(Environment):
 
     cumulated_reward = 0
 
-    for _ in range(self.n_action_repeat):
+    for action_repeat_idx in range(self.n_action_repeat):
       screen, reward, terminal, _ = self.env.step(action)
       cumulated_reward += reward
       current_lives = self.env.unwrapped.ale.lives()
@@ -118,7 +118,7 @@ class AtariEnvironment(Environment):
       return self.preprocess(screen, terminal), reward, terminal, {}
 
   def preprocess(self, raw_screen, terminal):
-    y = 0.2126 * raw_screen[:, :, 0] + 0.7152 * raw_screen[:, :, 1] + 0.0722 * raw_screen[:, :, 2]
+    y = 0.2989 * raw_screen[:, :, 0] + 0.5870 * raw_screen[:, :, 1] + 0.1140 * raw_screen[:, :, 2]
     y = y.astype(np.uint8)
     y_screen = imresize(y, self.observation_dims)
     return y_screen

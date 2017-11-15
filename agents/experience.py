@@ -37,7 +37,7 @@ class Experience(object):
         index = random.randint(self.history_length, self.count - 1)
         if index >= self.current and index - self.history_length < self.current:
           continue
-        if self.terminals[(index - self.history_length):index].any():
+        if self.terminals[(index - self.history_length - 1):index].any():
           continue
         break
       
