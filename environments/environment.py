@@ -95,13 +95,13 @@ class AtariEnvironment(Environment):
         terminal = False
         return self.preprocess(screen, terminal), 0, terminal
 
-    def step(self, action, is_training):
+    def step(self, action, is_training=False):
         if action == -1:
             # Step with random action
             action = self.env.action_space.sample()
 
         cumulated_reward = 0
-
+        terminal = False
         for action_repeat_idx in range(self.n_action_repeat):
             screen, reward, terminal, _ = self.env.step(action)
             cumulated_reward += reward
