@@ -104,13 +104,11 @@ class AtariEnvironment(Environment):
         terminal = False
         for action_repeat_idx in range(self.n_action_repeat):
             screen, reward, terminal, _ = self.env.step(action)
-            cumulated_reward += reward
             current_lives = self.env.unwrapped.ale.lives()
-
             if is_training and self.lives > current_lives:
                 terminal = True
-
             if terminal: break
+            cumulated_reward += reward
 
         if self.display:
             self.env.render()
